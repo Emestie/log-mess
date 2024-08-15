@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "lib": ["ESNext", "DOM"],
+        "strict": true,
+        "module": "CommonJS",
+        "moduleResolution": "Node",
+        "outDir": "./dist",
+        "sourceMap": true,
+        "declaration": true,
+        "allowSyntheticDefaultImports": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "noEmit": true
+    },
+    "include": ["src"],
+    "exclude": ["src/__tests__/*"]
+}
+

@@ -1,0 +1,4 @@
+dist
+log-mess-*.tgz
+node_modules
+.DS_Store

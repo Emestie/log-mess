@@ -1,0 +1,49 @@
+{
+    "name": "log-mess",
+    "version": "0.0.1",
+    "description": "Log messages with tags and configuration",
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs",
+            "default": "./dist/index.js"
+        }
+    },
+    "license": "ISC",
+    "author": {
+        "name": "Emestie",
+        "email": "emestie@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Emestie/log-mess"
+    },
+    "keywords": [
+        "log",
+        "message",
+        "console"
+    ],
+    "files": [
+        "dist/**",
+        "README.md",
+        "CHANGELOG.md"
+    ],
+    "scripts": {
+        "dev": "npm run build -- --watch",
+        "build": "tsup src/index.ts --format esm,cjs --dts --external ./package.json --sourcemap --clean",
+        "test": "vitest",
+        "prepublishOnly": "node ./changelog.mjs"
+    },
+    "devDependencies": {
+        "prettier": "^3.3.3",
+        "tsup": "^7.2.0",
+        "typescript": "^4.3.5"
+    },
+    "dependencies": {
+        "persival": "^0.0.3"
+    }
+}
