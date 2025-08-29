@@ -1,5 +1,6 @@
 import { logMessage } from "./message";
-import * as logConfig from "./config";
 
-export { logMessage, logMessage as lm, logConfig };
+const logConfig = {};
 
+export * as LogConfig from "./config";
+export { logMessage as lm, logConfig, logMessage };

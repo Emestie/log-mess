@@ -3,14 +3,19 @@
     "version": "0.0.2",
     "description": "Log messages with tags and configuration",
     "type": "module",
-    "main": "dist/index.js",
-    "types": "./dist/index.d.ts",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.cts",
     "exports": {
         ".": {
-            "types": "./dist/index.d.ts",
+            "types": "./dist/index.d.cts",
             "import": "./dist/index.js",
-            "require": "./dist/index.cjs",
-            "default": "./dist/index.js"
+            "require": "./dist/index.cjs"
+        }
+    },
+    "zshy": {
+        "exports": {
+            ".": "./src/index.ts"
         }
     },
     "license": "ISC",
@@ -33,17 +38,16 @@
         "CHANGELOG.md"
     ],
     "scripts": {
-        "dev": "npm run build -- --watch",
-        "build": "tsup src/index.ts --format esm,cjs --dts --external ./package.json --sourcemap --clean",
+        "build": "zshy",
         "test": "vitest",
         "prepublishOnly": "node ./changelog.mjs"
     },
     "devDependencies": {
-        "prettier": "^3.3.3",
-        "tsup": "^7.2.0",
-        "typescript": "^4.3.5"
+        "prettier": "^3.6.2",
+        "typescript": "^5.9.2",
+        "zshy": "^0.3.5"
     },
     "dependencies": {
-        "persival": "^0.0.4"
+        "persival": "^0.0.7"
     }
 }

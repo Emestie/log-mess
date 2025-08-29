@@ -1,9 +1,10 @@
-import { idGenerator } from "./id";
+import { isLog, isVariable } from "./availability";
+import { getId } from "./id";
 import { store } from "./persistent";
 import { getTag } from "./tag";
 
 type LogMessageReturn = { update: (...value: any[]) => void; remove: () => void };
-type LogMessageMeta = { tag?: string };
+type LogMessageMeta = { tag?: string; bg?: string; fg?: string; silent?: boolean };
 
 export function logMessage(tag: string | undefined, ...value: any[]): LogMessageReturn;
 export function logMessage(meta: LogMessageMeta, ...value: any[]): LogMessageReturn;
@@ -11,37 +12,22 @@ export function logMessage(
     tagOrMeta: string | undefined | LogMessageMeta,
     ...value: any[]
 ): LogMessageReturn {
-    const tag = typeof tagOrMeta === "object" ? tagOrMeta.tag : tagOrMeta;
+    const omode = typeof tagOrMeta === "object";
+    const tag = omode ? tagOrMeta.tag : tagOrMeta;
+    const meta = omode ? tagOrMeta : undefined;
+    const id = getId();
 
-    const overrideMode = store.configuration.$value.overrideMode;
-    const logMode = overrideMode?.({ tag, value }) ?? store.configuration.$value.mode ?? "both";
-
-    const id = idGenerator.next().value;
-
-    if (logMode === "both" || logMode === "variable") {
-        store.messages.value.push({ id, tag, timestamp: Date.now(), value });
-    }
-
-    if (logMode === "both" || logMode === "console") {
-        console.log(...getTag(tag, store.configuration.$value.decoration), ...value);
-    }
+    if (isVariable()) store.messages.value.push({ id, tag, timestamp: Date.now(), value });
+    if (isLog(tag, meta?.silent)) console.log(...getTag(tag, meta), ...value);
 
     return {
-        update: (...value: any[]) => updateLogMessage(id, ...value),
-        remove: () => removeLogMessage(id),
+        update: (...value: any[]) => {
+            const index = store.messages.value.findIndex((x) => x.id === id);
+            if (index === -1) return;
+            store.messages.value[index].value = value;
+        },
+        remove: () => {
+            store.messages.value = store.messages.$value.filter((x) => x.id !== id);
+        },
     };
 }
-
-function removeLogMessage(id: number) {
-    store.messages.value = store.messages.$value.filter((x) => x.id !== id);
-}
-
-function updateLogMessage(id: number, ...value: any[]) {
-    // to update tag/meta - create separate fn
-    const index = store.messages.value.findIndex((x) => x.id === id);
-
-    if (index === -1) return;
-
-    store.messages.value[index].value = value;
-}
-

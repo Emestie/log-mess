@@ -1,8 +1,13 @@
+# 0.0.3
+
+- brand new `LogConfig`
+- inline color configuration
+- changed build to `zshy`
+
 # 0.0.2
 
--   updated `persival`
+- updated `persival`
 
 # 0.0.1
 
--   initial release
-
+- initial release

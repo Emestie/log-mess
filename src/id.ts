@@ -1,14 +1,5 @@
-function* _idGenerator() {
-    let i = 0;
+import { store } from "./persistent";
 
-    while (true) {
-        yield ++i;
-    }
-
-    return i;
+export function getId() {
+    return store.id.value++;
 }
-
-const idGenerator = _idGenerator();
-
-export { idGenerator };
-
