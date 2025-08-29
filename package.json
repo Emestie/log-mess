@@ -1,6 +1,6 @@
 {
     "name": "log-mess",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Log messages with tags and configuration",
     "type": "module",
     "main": "./dist/index.cjs",
