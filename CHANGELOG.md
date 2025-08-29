@@ -3,6 +3,7 @@
 - brand new `LogConfig`
 - inline color configuration
 - changed build to `zshy`
+- added tests
 
 # 0.0.2
 
