@@ -1,3 +1,8 @@
+# 1.0.0
+
+- release! 🎉
+- changed `package.json` types to support old typescript
+
 # 0.0.4
 
 - brand new `LogConfig`
@@ -12,3 +17,4 @@
 # 0.0.1
 
 - initial release
+
