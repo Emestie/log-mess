@@ -1,3 +1,7 @@
+# 1.0.1
+
+- fixed bug with localStorage in web worker environment
+
 # 1.0.0
 
 - release! 🎉
