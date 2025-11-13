@@ -19,28 +19,45 @@ describe("getTag", () => {
     it("should return basic tag format for modern browsers", () => {
         const result = getTag("DEBUG");
 
-        expect(result).toEqual(["%c DEBUG ", "border: 1px solid black;"]);
+        expect(result).toEqual([
+            "%c DEBUG ",
+            "background:white;color:black;border:1px solid black;",
+        ]);
     });
 
     it("should return custom colors when decoration is provided", () => {
         const decoration = { bg: "red", fg: "white" };
         const result = getTag("ERROR", decoration);
 
-        expect(result).toEqual(["%c ERROR ", "background: red; color: white;"]);
+        expect(result).toEqual(["%c ERROR ", "background:red;color:white;"]);
+    });
+
+    it("should return custom colors and border when decoration is provided", () => {
+        const decoration = { bg: "red", fg: "white", border: "red" };
+        const result = getTag("ERROR", decoration);
+
+        expect(result).toEqual(["%c ERROR ", "background:red;color:white;border:1px solid red;"]);
+    });
+
+    it("should return border when only border is provided", () => {
+        const decoration = { border: "blue" };
+        const result = getTag("INFO", decoration);
+
+        expect(result).toEqual(["%c INFO ", "background:white;color:black;border:1px solid blue;"]);
     });
 
     it("should use default colors when only bg is provided", () => {
         const decoration = { bg: "blue" };
         const result = getTag("INFO", decoration);
 
-        expect(result).toEqual(["%c INFO ", "background: blue; color: black;"]);
+        expect(result).toEqual(["%c INFO ", "background:blue;color:black;"]);
     });
 
     it("should use default colors when only fg is provided", () => {
         const decoration = { fg: "green" };
         const result = getTag("SUCCESS", decoration);
 
-        expect(result).toEqual(["%c SUCCESS ", "background: white; color: green;"]);
+        expect(result).toEqual(["%c SUCCESS ", "background:white;color:green;"]);
     });
 
     it("should return simple format for Internet Explorer", () => {

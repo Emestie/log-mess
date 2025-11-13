@@ -1,16 +1,16 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { logMessage } from "../message";
-import { store } from "../persistent";
+import { getStore } from "../persistent";
 
 // Mock console.log
 const mockConsoleLog = vi.spyOn(console, "log").mockImplementation(() => {});
 
 describe("logMessage", () => {
     beforeEach(() => {
-        // Reset store state
-        store.messages.value = [];
-        store.config.value = { t0: [], t1: [], v0: false };
-        store.id.value = 0;
+        // Reset getStore() state
+        getStore().messages.value = [];
+        getStore().config.value = { t0: [], t1: [], v0: false };
+        getStore().id.value = 0;
         mockConsoleLog.mockClear();
         (localStorage.getItem as any).mockReturnValue(null);
     });
@@ -19,8 +19,8 @@ describe("logMessage", () => {
         const result = logMessage(undefined, "Hello", "World");
 
         expect(mockConsoleLog).toHaveBeenCalledWith("Hello", "World");
-        expect(store.messages.value).toHaveLength(1);
-        expect(store.messages.value[0]).toMatchObject({
+        expect(getStore().messages.value).toHaveLength(1);
+        expect(getStore().messages.value[0]).toMatchObject({
             id: 0,
             tag: undefined,
             value: ["Hello", "World"],
@@ -33,8 +33,8 @@ describe("logMessage", () => {
         const result = logMessage("DEBUG", "Test message");
 
         expect(mockConsoleLog).toHaveBeenCalled();
-        expect(store.messages.value).toHaveLength(1);
-        expect(store.messages.value[0]).toMatchObject({
+        expect(getStore().messages.value).toHaveLength(1);
+        expect(getStore().messages.value[0]).toMatchObject({
             id: 0,
             tag: "DEBUG",
             value: ["Test message"],
@@ -46,8 +46,8 @@ describe("logMessage", () => {
         const result = logMessage(meta, "Info message");
 
         expect(mockConsoleLog).toHaveBeenCalled();
-        expect(store.messages.value).toHaveLength(1);
-        expect(store.messages.value[0]).toMatchObject({
+        expect(getStore().messages.value).toHaveLength(1);
+        expect(getStore().messages.value[0]).toMatchObject({
             id: 0,
             tag: "INFO",
             value: ["Info message"],
@@ -55,21 +55,21 @@ describe("logMessage", () => {
     });
 
     it("should not log when tag is disabled in config", () => {
-        store.config.value.t0.push("DISABLED");
+        getStore().config.value.t0.push("DISABLED");
 
         logMessage("DISABLED", "This should not log");
 
         expect(mockConsoleLog).not.toHaveBeenCalled();
-        expect(store.messages.value).toHaveLength(1); // Still stored in messages
+        expect(getStore().messages.value).toHaveLength(1); // Still getStore()d in messages
     });
 
     it("should log when tag is enabled in config", () => {
-        store.config.value.t1.push("ENABLED");
+        getStore().config.value.t1.push("ENABLED");
 
         logMessage("ENABLED", "This should log");
 
         expect(mockConsoleLog).toHaveBeenCalled();
-        expect(store.messages.value).toHaveLength(1);
+        expect(getStore().messages.value).toHaveLength(1);
     });
 
     it("should not log when silent is true", () => {
@@ -78,7 +78,7 @@ describe("logMessage", () => {
         logMessage(meta, "Silent message");
 
         expect(mockConsoleLog).not.toHaveBeenCalled();
-        expect(store.messages.value).toHaveLength(1); // Still stored
+        expect(getStore().messages.value).toHaveLength(1); // Still getStore()d
     });
 
     it("should update message value", () => {
@@ -86,31 +86,31 @@ describe("logMessage", () => {
 
         result.update("Updated", "Value");
 
-        expect(store.messages.value[0].value).toEqual(["Updated", "Value"]);
+        expect(getStore().messages.value[0].value).toEqual(["Updated", "Value"]);
     });
 
     it("should remove message", () => {
         const result = logMessage("TEST", "To be removed");
 
-        expect(store.messages.value).toHaveLength(1);
+        expect(getStore().messages.value).toHaveLength(1);
 
         result.remove();
 
-        expect(store.messages.value).toHaveLength(0);
+        expect(getStore().messages.value).toHaveLength(0);
     });
 
     it("should handle multiple messages with different IDs", () => {
         const msg1 = logMessage("TAG1", "Message 1");
         const msg2 = logMessage("TAG2", "Message 2");
 
-        expect(store.messages.value).toHaveLength(2);
-        expect(store.messages.value[0].id).toBe(0);
-        expect(store.messages.value[1].id).toBe(1);
+        expect(getStore().messages.value).toHaveLength(2);
+        expect(getStore().messages.value[0].id).toBe(0);
+        expect(getStore().messages.value[1].id).toBe(1);
 
         msg1.remove();
 
-        expect(store.messages.value).toHaveLength(1);
-        expect(store.messages.value[0].id).toBe(1);
+        expect(getStore().messages.value).toHaveLength(1);
+        expect(getStore().messages.value[0].id).toBe(1);
     });
 
     it("should not update non-existent message", () => {

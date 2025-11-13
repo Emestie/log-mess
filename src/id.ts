@@ -1,5 +1,5 @@
-import { store } from "./persistent";
+import { getStore } from "./persistent";
 
 export function getId() {
-    return store.id.value++;
+    return getStore().id.value++;
 }

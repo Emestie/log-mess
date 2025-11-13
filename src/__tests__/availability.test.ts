@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { store } from "../persistent";
+import { getStore } from "../persistent";
 
 describe("availability", () => {
     let isLog: any;
     let isVariable: any;
 
     beforeEach(async () => {
-        // Reset store state
-        store.config.value = { t0: [], t1: [], v0: false };
+        // Reset getStore() state
+        getStore().config.value = { t0: [], t1: [], v0: false };
         (localStorage.getItem as any).mockReturnValue(null);
 
         // Reset modules to clear internal caching
@@ -47,14 +47,14 @@ describe("availability", () => {
         });
 
         it("should return false when tag is in config t0 (disabled)", () => {
-            store.config.value.t0.push("DISABLED");
+            getStore().config.value.t0.push("DISABLED");
 
             expect(isLog("DISABLED")).toBe(false);
             expect(isLog("OTHER")).toBe(true);
         });
 
         it("should return true when tag is in config t1 (enabled)", () => {
-            store.config.value.t1.push("ENABLED");
+            getStore().config.value.t1.push("ENABLED");
 
             expect(isLog("ENABLED")).toBe(true);
         });
@@ -69,7 +69,7 @@ describe("availability", () => {
                 if (key === "log-mess-disabled") return "TEST";
                 return null;
             });
-            store.config.value.t1.push("TEST"); // Enable in config
+            getStore().config.value.t1.push("TEST"); // Enable in config
 
             expect(isLog("TEST")).toBe(false); // Should be disabled due to localStorage
         });
@@ -79,7 +79,7 @@ describe("availability", () => {
                 if (key === "log-mess-enabled") return "TEST";
                 return null;
             });
-            store.config.value.t0.push("TEST"); // Disable in config
+            getStore().config.value.t0.push("TEST"); // Disable in config
 
             expect(isLog("TEST")).toBe(true); // Should be enabled due to localStorage
         });
@@ -100,7 +100,7 @@ describe("availability", () => {
         });
 
         it("should return false when disabled in config", () => {
-            store.config.value.v0 = true;
+            getStore().config.value.v0 = true;
 
             expect(isVariable()).toBe(false);
         });
@@ -110,7 +110,7 @@ describe("availability", () => {
                 if (key === "log-mess-variable-disabled") return "true";
                 return null;
             });
-            store.config.value.v0 = true;
+            getStore().config.value.v0 = true;
 
             expect(isVariable()).toBe(false);
         });

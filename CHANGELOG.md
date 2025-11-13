@@ -1,3 +1,8 @@
+# 1.0.2
+
+- fixed tree-shaking bug (removed floating constants)
+- by default, if none provided, tag uses white background with black border
+
 # 1.0.1
 
 - fixed bug with localStorage in web worker environment
@@ -21,4 +26,3 @@
 # 0.0.1
 
 - initial release
-
