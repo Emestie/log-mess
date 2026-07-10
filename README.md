@@ -7,6 +7,8 @@ Enhanced `console.log` with tags, persistence, and configuration
 
 A powerful logging utility that extends `console.log` with tagging, persistence, styling, and flexible configuration options. Perfect for debugging complex applications where you need organized, filterable, and persistent logging.
 
+> **Note:** `log-mess` targets web environments (browsers and web workers). It relies on `localStorage`, `navigator`, and a global `self`/`window` for persistence, and is not intended for plain Node.js usage.
+
 ## Features
 
 - 🏷️ **Tagged Logging** - Organize logs with custom tags

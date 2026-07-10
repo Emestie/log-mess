@@ -8,5 +8,5 @@ const version = jsonPackage.version;
 
 if (!changelog.includes(`# ${version}`)) {
     console.log("[Error!] CHANGELOG.md must cover current version!");
-    exit(1);
+    process.exit(1);
 }
