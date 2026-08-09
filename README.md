@@ -3,7 +3,7 @@
 Enhanced `console.log` with tags, persistence, and configuration
 
 [![npm version](https://badge.fury.io/js/log-mess.svg)](https://www.npmjs.com/package/log-mess)
-[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 A powerful logging utility that extends `console.log` with tagging, persistence, styling, and flexible configuration options. Perfect for debugging complex applications where you need organized, filterable, and persistent logging.
 
@@ -216,4 +216,4 @@ npm run build
 
 ## License
 
-ISC License - see LICENSE file for details.
+[MIT](LICENSE) © [Emestie](https://github.com/Emestie)

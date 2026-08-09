@@ -19,7 +19,7 @@
         },
         "noEdit": true
     },
-    "license": "ISC",
+    "license": "MIT",
     "author": {
         "name": "Emestie",
         "email": "emestie@gmail.com"
@@ -36,7 +36,8 @@
     "files": [
         "dist/**",
         "README.md",
-        "CHANGELOG.md"
+        "CHANGELOG.md",
+        "LICENSE"
     ],
     "scripts": {
         "build": "zshy",
